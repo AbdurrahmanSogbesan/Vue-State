@@ -1,0 +1,96 @@
+<template>
+  <div class="todo">
+    <center><h1>To-do List</h1></center>
+    <div>
+      <input type="text" v-model="newItem" placeholder="Add new item" />
+      <button @click="addItem" :disabled="newItem.length === 0">Add</button>
+    </div>
+
+    <div>
+      <ul class="list">
+        <li class="list-item" v-for="(item, i) in items" :key="i">
+          <span>{{ item.name }}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      newItem: "",
+      items: [
+        { id: 1, name: "Clean the Fridge" },
+        { id: 2, name: "Walk the dogs" },
+      ],
+    };
+  },
+  props: {},
+  methods: {
+    addItem() {
+      this.items.push({
+        id: this.items.length + 1,
+        name: this.newItem,
+      });
+      this.newItem = "";
+    },
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+.todo {
+  margin: 0 30%;
+  padding: 18px 6px;
+  background-color: lightblue;
+}
+button {
+  background-color: #4caf50;
+  color: orange;
+  width: 20%;
+  padding: 15px;
+  margin: 10px 0px;
+  border: none;
+  cursor: pointer;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 70%;
+  margin: 8px 20px;
+  padding: 12px 20px;
+  border: 2px solid green;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+button:hover {
+  opacity: 0.7;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-item {
+  padding: 12px 16px 12px 16px;
+  border: 1px solid #e8e8e8;
+  // cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+
+.list-item span {
+  color: green;
+  font-weight: 300;
+}
+</style>
