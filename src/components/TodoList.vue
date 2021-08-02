@@ -8,8 +8,14 @@
 
     <div>
       <ul class="list">
-        <li class="list-item" v-for="(item, i) in items" :key="i">
-          <span>{{ item.name }}</span>
+        <li
+          class="list-item"
+          v-for="(item, i) in items"
+          :key="i"
+          :class="{ completed: item.completed }"
+          @click="toggleComplete(item)"
+        >
+            <span>{{ item.name }}</span>
         </li>
       </ul>
     </div>
@@ -22,19 +28,22 @@ export default {
     return {
       newItem: "",
       items: [
-        { id: 1, name: "Clean the Fridge" },
-        { id: 2, name: "Walk the dogs" },
+        { id: 1, name: "Clean the Fridge", completed: true },
+        { id: 2, name: "Walk the dogs", completed: false },
       ],
     };
   },
-  props: {},
   methods: {
     addItem() {
       this.items.push({
         id: this.items.length + 1,
         name: this.newItem,
+        completed: false
       });
       this.newItem = "";
+    },
+    toggleComplete(item) {
+      item.completed = !item.completed;
     },
   },
 };
@@ -90,7 +99,16 @@ button:hover {
 }
 
 .list-item span {
-  color: green;
+  color: white;
   font-weight: 300;
+}
+
+.list-item.completed {
+  border: 1px solid #4fc08d;
+}
+
+.list-item.completed span {
+  text-decoration: line-through;
+  color: green;
 }
 </style>
