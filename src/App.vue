@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <LoginPage/>
+    <TodoList/>
   </div>
 </template>
 
 <script>
-import LoginPage from './components/LoginPage.vue'
+import TodoList from './components/TodoList.vue'
 
 export default {
   name: 'App',
   components: {
-    LoginPage
+    TodoList,
   }
 }
 </script>
