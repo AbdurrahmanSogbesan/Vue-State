@@ -13,9 +13,10 @@
           v-for="(item, i) in items"
           :key="i"
           :class="{ completed: item.completed }"
-          @click="toggleComplete(item)"
         >
-            <span>{{ item.name }}</span>
+          <span @click="toggleComplete(item)">{{ item.name }}</span>
+          <input v-model="item.name" v-if="!item.isHidden" />
+          <button @click="item.isHidden = !item.isHidden">Edit / Done</button>
         </li>
       </ul>
     </div>
@@ -28,8 +29,8 @@ export default {
     return {
       newItem: "",
       items: [
-        { id: 1, name: "Clean the Fridge", completed: true },
-        { id: 2, name: "Walk the dogs", completed: false },
+        { id: 1, name: "Clean the Fridge", completed: false, isHidden: true },
+        { id: 2, name: "Walk the dogs", completed: false, isHidden: true },
       ],
     };
   },
@@ -38,12 +39,17 @@ export default {
       this.items.push({
         id: this.items.length + 1,
         name: this.newItem,
-        completed: false
+        completed: false,
+        isHidden: true,
       });
       this.newItem = "";
     },
     toggleComplete(item) {
       item.completed = !item.completed;
+    },
+    editItem() {
+      this.items.name = this.items.name.toUpperCase();
+      return this.items.name;
     },
   },
 };
@@ -88,12 +94,12 @@ button:hover {
 }
 
 .list-item {
-  padding: 12px 16px 12px 16px;
+  padding: 0 16px;
   border: 1px solid #e8e8e8;
   // cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-bottom: 6px;
   border-radius: 4px;
 }
@@ -101,6 +107,15 @@ button:hover {
 .list-item span {
   color: white;
   font-weight: 300;
+  cursor: pointer;
+}
+
+.list-item input {
+  padding: 12px 20px;
+  border: 2px solid green;
+  box-sizing: border-box;
+  border-radius: 7px;
+  outline: none;
 }
 
 .list-item.completed {
